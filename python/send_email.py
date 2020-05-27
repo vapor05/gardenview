@@ -8,8 +8,7 @@ from email.mime.text import MIMEText
 port = 587
 smtp_server = "smtp.gmail.com"
 password = os.environment["EMAIL_PASS"]
-email_account = "gardenviewupdates@gmail.com"
-sender = email_account
+sender = os.environment["EMAIL_ACCOUNT"]
 receiver = "gardenviewupdates@gmail.com"
 
 subject = "Sending attached video"
