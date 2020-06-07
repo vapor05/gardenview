@@ -10,16 +10,18 @@ else
 fi
 
 # verify required envrionment variables exist
-if [ -z "$EMAIL_PASS" ]
-then
-    echo "Error: EMAIL_PASS environment variable is not set"
-    exit 1
-fi
-
 if [ -z "$EMAIL_ACCOUNT" ]
 then
     echo "Error: EMAIL_ACCOUNT environment variable is not set"
-    exit 1
+    read -p "Sender Email Account: " sender_email
+    export EMAIL_ACCOUNT=$sender_email
+fi
+
+if [ -z "$EMAIL_PASS" ]
+then
+    echo "Error: EMAIL_PASS environment variable is not set"
+    read -sp "Sender Email Password: " sender_password
+    export EMAIL_PASS=$sender_password
 fi
 
 echo "Required environment variables are set"
