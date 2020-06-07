@@ -14,7 +14,12 @@ port = 587
 smtp_server = "smtp.gmail.com"
 password = os.environ["EMAIL_PASS"]
 sender = os.environ["EMAIL_ACCOUNT"]
-receiver = "gardenviewupdates@gmail.com"
+receiver = ["gardenviewupdates@gmail.com"]
+receiver_list = os.environ.get("EMAIL_RECEIVER_LIST")
+
+if receiver_list:
+    receiver = receiver + receiver_list.split(",")
+
 video_root = "/opt/gardenview/output"
 archive_root = "/opt/gardenview/archive"
 
@@ -23,7 +28,7 @@ body = "See the attached files for video and pictures to see the motion detected
 
 message = MIMEMultipart()
 message["From"] = sender
-message["To"] = receiver
+message["To"] = ",".join(receiver)
 message["Subject"] = subject
 message.attach(MIMEText(body, "plain"))
 
@@ -52,4 +57,4 @@ context = ssl.create_default_context()
 with smtplib.SMTP(smtp_server, port) as server:
     server.starttls(context=context)
     server.login(sender, password)
-    server.sendmail(sender, receiver, message.as_string())
+    server.sendmail(sender, ",".join(receiver), message.as_string())
